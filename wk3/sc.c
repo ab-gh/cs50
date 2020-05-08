@@ -25,5 +25,11 @@ int main(void)
     person people[1];
     people[0].name = "EMMA";
     people[0].number = "617-555-0101";
-    printf("%s\n", people[0].name);
+    //printf("%lu\n", sizeof people / sizeof *people);
+    
+    string name = "NAME";
+    if (strcmp(name, "NAME") == 0)
+    {
+        printf("yes\n");
+    }
 }
