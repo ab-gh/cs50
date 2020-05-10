@@ -133,10 +133,13 @@ int main(int argc, string argv[])
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
+    // For all candidates
     for (int i = 0; i < candidate_count; i++)
     {
+        // If the name is found
         if (strcmp(candidates[i].name, name) == 0)
-        {
+        {   
+            // Record the index
             preferences[voter][rank] = i;
             return true;
         }
@@ -150,14 +153,25 @@ void tabulate(void)
     // Reset
     for (int c = 0; c < candidate_count; c++)
     {
+        // not sure if this is needed but hey it works
         candidates[c].votes = 0;
     }
+
     // Count votes
+    // for each vote
     for (int d = 0; d < voter_count; d++)
     {
-        if (!candidates[preferences[d][0]].eliminated)
+        // for each preference
+        for (int e = 0; e < candidate_count; e++)
         {
-            candidates[preferences[d][0]].votes++;
+            // If the candidate in this preference slot isnt eliminated
+            if (!candidates[preferences[d][e]].eliminated)
+            {
+                // They get a vote
+                candidates[preferences[d][e]].votes++;
+                // Stop because weve counted the highest position preference which isnt eliminated
+                break;
+            }
         }
     }
     for (int x = 0; x < candidate_count; x++)
@@ -170,14 +184,18 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-
-    const int QUOTA = ceil(voter_count / 2);
+    // Forces float conversion
+    const int QUOTA = ceil(voter_count / 2.0);
+    // For candidates
     for (int i = 0; i < candidate_count; i++)
     {
+        // If they are not eliminated
         if (!candidates[i].eliminated)
         {
+            // If they have over the quota
             if (candidates[i].votes > QUOTA)
             {
+                // They win
                 printf("%s\n", candidates[i].name);
                 return true;
             }
@@ -190,13 +208,17 @@ bool print_winner(void)
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
+    // Guess that the first candidate has the minimum
     int min = candidates[0].votes;
     for (int i = 0; i < candidate_count; i++)
     {
+        // If the candidate isnt eliminated
         if (!candidates[i].eliminated)
         {
+            // If the next canidate has less than the current
             if (candidates[i].votes < min)
             {
+                // They are the new minimum
                 min = candidates[i].votes;
             }
 
@@ -208,23 +230,21 @@ int find_min(void)
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
-    // Count up the remaining candidates
-    int candidates_left = 0;
-    for (int c = 0; c< candidate_count; c++)
+    // For all candidates
+    for (int i = 0; i < candidate_count; i++)
     {
-        if (!candidates[c].eliminated)
+        // If not eliminated
+        if (!candidates[i].eliminated)
         {
-            candidates_left++;
+            // If they dont have the minimum vote
+            if (candidates[i].votes != min)
+            {
+                // No tie
+                return false;
+            }
         }
+
     }
-    for (int i = 0; i < candidate_count - 1; i++)
-    {
-        if (!(candidates[i].votes == candidates[i + 1].votes))
-        {
-            return false;
-        }
-    }
-    printf("Tied\n");
     return true;
 }
 
@@ -237,29 +257,6 @@ void eliminate(int min)
         // if candidate has minimum number of votes, we need to eliminate them
         if (candidates[c].votes == min)
         {
-            printf("eliminating candidate %s\n", candidates[c].name);
-            bool shifting = false;
-            // For each vote(r)
-            for (int v = 0; v < voter_count; v++)
-            {
-                // For each preference
-                for (int p = 0; p < candidate_count; p++)
-                {
-                    // If preference is the eliminated candidate we will start eliminating
-                    if (preferences[v][p] == c)
-                    {
-                        shifting = true;
-                    }
-                    // if we are eliminating
-                    if (shifting)
-                    {
-                        if (p < candidate_count)
-                        {
-                            preferences[v][p] = preferences[v][p + 1];
-                        }
-                    }
-                }
-            }
             candidates[c].eliminated = true;
         }
 
