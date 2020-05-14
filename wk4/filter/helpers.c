@@ -149,19 +149,19 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     }
                     else
                     {
-                        red_x_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtRed * gx[cols_delta+1][rows_delta+1]);
-                        green_x_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtGreen * gx[cols_delta+1][rows_delta+1]);
-                        blue_x_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtBlue * gx[cols_delta+1][rows_delta+1]);
+                        red_x_total += (int) image[row+rows_delta][col+cols_delta].rgbtRed * gx[cols_delta+1][rows_delta+1];
+                        green_x_total += (int) image[row+rows_delta][col+cols_delta].rgbtGreen * gx[cols_delta+1][rows_delta+1];
+                        blue_x_total += (int) image[row+rows_delta][col+cols_delta].rgbtBlue * gx[cols_delta+1][rows_delta+1];
 
-                        red_y_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtRed * gy[cols_delta+1][rows_delta+1]);
-                        green_y_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtGreen * gy[cols_delta+1][rows_delta+1]);
-                        blue_y_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtBlue * gy[cols_delta+1][rows_delta+1]);
+                        red_y_total += (int) image[row+rows_delta][col+cols_delta].rgbtRed * gy[cols_delta+1][rows_delta+1];
+                        green_y_total += (int) image[row+rows_delta][col+cols_delta].rgbtGreen * gy[cols_delta+1][rows_delta+1];
+                        blue_y_total += (int) image[row+rows_delta][col+cols_delta].rgbtBlue * gy[cols_delta+1][rows_delta+1];
                     }
                 }
             }
-            new_image[row][col].rgbtRed = ((pow(red_x_total, 2) + pow(red_y_total, 2)) <= 0) ? 0 : round(sqrt(pow(red_x_total, 2) + pow(red_y_total, 2)));
-            new_image[row][col].rgbtGreen = ((pow(green_x_total, 2) + pow(green_y_total, 2)) <= 0) ? 0 : round(sqrt(pow(green_x_total, 2) + pow(green_y_total, 2)));
-            new_image[row][col].rgbtBlue = ((pow(blue_x_total, 2) + pow(blue_y_total, 2)) <= 0) ? 0 : round(sqrt(pow(blue_x_total, 2) + pow(blue_y_total, 2)));
+            new_image[row][col].rgbtRed = ((pow(red_x_total, 2) + pow(red_y_total, 2)) <= 0) ? 0 : clampy(round(sqrt(pow(red_x_total, 2) + pow(red_y_total, 2))));
+            new_image[row][col].rgbtGreen = ((pow(green_x_total, 2) + pow(green_y_total, 2)) <= 0) ? 0 : clampy(round(sqrt(pow(green_x_total, 2) + pow(green_y_total, 2))));
+            new_image[row][col].rgbtBlue = ((pow(blue_x_total, 2) + pow(blue_y_total, 2)) <= 0) ? 0 : clampy(round(sqrt(pow(blue_x_total, 2) + pow(blue_y_total, 2))));
         }
     }
     for (int r = 0; r < height; r++)
