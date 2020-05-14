@@ -4,9 +4,11 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 // Prototypes
 void swap(BYTE *a, BYTE *b);
+uint8_t clampy(int a);
 
 typedef struct
 {
@@ -106,11 +108,19 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
     // edge kernels
-    int gx[3][3] = {{-1, 0, 1}, 
-                    {-2, 0, 2}, 
+    //int gx[3][3] = {{-1, 0, 1},
+    //                {-2, 0, 2},
+    //                {-1, 0, 1}};
+    //int gy[3][3] = {{-1, -2, -1},
+    //                {0, 0, 0},
+    //                {1, 2, 1}};
+    //                
+                    
+    int gx[3][3] = {{-1, 0, 1},
+                    {-2, 0, 2},
                     {-1, 0, 1}};
-    int gy[3][3] = {{-1, -1, -1}, 
-                    {0, 0, 0}, 
+    int gy[3][3] = {{-1, -2, -1},
+                    {0, 0, 0},
                     {1, 2, 1}};
     RGBTRIPLE(*new_image)[width] = calloc(height, width * sizeof(RGBTRIPLE));
     if (new_image == NULL)
@@ -122,30 +132,30 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int col = 0; col < width; col++)
         {
-            int red_x_total = 0;
-            int green_x_total = 0;
-            int blue_x_total = 0;
-            int red_y_total = 0;
-            int green_y_total = 0;
-            int blue_y_total = 0;
+            uint8_t red_x_total = 0;
+            uint8_t green_x_total = 0;
+            uint8_t blue_x_total = 0;
+            uint8_t red_y_total = 0;
+            uint8_t green_y_total = 0;
+            uint8_t blue_y_total = 0;
 
             for (int rows_delta = -1; rows_delta < 2; rows_delta++)
             {
                 for (int cols_delta = -1; cols_delta < 2; cols_delta++)
                 {
-                    if ((row+rows_delta) < 0 || (row+rows_delta) > height || (col+cols_delta) < 0 || (col+cols_delta) > width)
+                    if ((row+rows_delta) < 0 || (row+rows_delta) >= height || (col+cols_delta) < 0 || (col+cols_delta) >= width)
                     {
                         continue;
                     }
                     else
                     {
-                        red_x_total += (image[row+rows_delta][col+cols_delta].rgbtRed * gx[rows_delta+1][cols_delta+1]);
-                        green_x_total += (image[row+rows_delta][col+cols_delta].rgbtGreen * gx[rows_delta+1][cols_delta+1]);
-                        blue_x_total += (image[row+rows_delta][col+cols_delta].rgbtBlue * gx[rows_delta+1][cols_delta+1]);
+                        red_x_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtRed * gx[cols_delta+1][rows_delta+1]);
+                        green_x_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtGreen * gx[cols_delta+1][rows_delta+1]);
+                        blue_x_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtBlue * gx[cols_delta+1][rows_delta+1]);
 
-                        red_y_total += (image[row+rows_delta][col+cols_delta].rgbtRed * gy[rows_delta+1][cols_delta+1]);
-                        green_y_total += (image[row+rows_delta][col+cols_delta].rgbtGreen * gy[rows_delta+1][cols_delta+1]);
-                        blue_y_total += (image[row+rows_delta][col+cols_delta].rgbtBlue * gy[rows_delta+1][cols_delta+1]);
+                        red_y_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtRed * gy[cols_delta+1][rows_delta+1]);
+                        green_y_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtGreen * gy[cols_delta+1][rows_delta+1]);
+                        blue_y_total += clampy((int) image[row+rows_delta][col+cols_delta].rgbtBlue * gy[cols_delta+1][rows_delta+1]);
                     }
                 }
             }
@@ -163,6 +173,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             image[r][c].rgbtBlue = (new_image[r][c].rgbtBlue > 255) ? 255 : new_image[r][c].rgbtBlue;
         }
     }
+    free(new_image);
     return;
 }
 
@@ -171,4 +182,11 @@ void swap(BYTE *a, BYTE *b)
     BYTE tmp = *a;
     *a = *b;
     *b = tmp;
+}
+
+uint8_t clampy(int a)
+{
+    if (a >= 255) return 255;
+    else if (a <=0) return 0;
+    else return (uint8_t) a;
 }
