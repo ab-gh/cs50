@@ -122,7 +122,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     int gy[3][3] = {{-1, -2, -1},
                     {0, 0, 0},
                     {1, 2, 1}};
-    RGBTRIPLE(*new_image)[width] = calloc(height, width * sizeof(RGBTRIPLE));
+    pixels(*new_image)[width] = calloc(height, width * sizeof(pixels));
     if (new_image == NULL)
     {
         fprintf(stderr, "Not enough memory to store image.\n");
@@ -159,18 +159,18 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     }
                 }
             }
-            new_image[row][col].rgbtRed = ((pow(red_x_total, 2) + pow(red_y_total, 2)) <= 0) ? 0 : clampy(round(sqrt(pow(red_x_total, 2) + pow(red_y_total, 2))));
-            new_image[row][col].rgbtGreen = ((pow(green_x_total, 2) + pow(green_y_total, 2)) <= 0) ? 0 : clampy(round(sqrt(pow(green_x_total, 2) + pow(green_y_total, 2))));
-            new_image[row][col].rgbtBlue = ((pow(blue_x_total, 2) + pow(blue_y_total, 2)) <= 0) ? 0 : clampy(round(sqrt(pow(blue_x_total, 2) + pow(blue_y_total, 2))));
+            new_image[row][col].red = (int) clampy(round(sqrt(pow(red_x_total, 2) + pow(red_y_total, 2))));
+            new_image[row][col].green = (int) clampy(round(sqrt(pow(green_x_total, 2) + pow(green_y_total, 2))));
+            new_image[row][col].blue = (int) clampy(round(sqrt(pow(blue_x_total, 2) + pow(blue_y_total, 2))));
         }
     }
     for (int r = 0; r < height; r++)
     {
         for (int c = 0; c < width; c++)
         {
-            image[r][c].rgbtRed = (new_image[r][c].rgbtRed > 255) ? 255 : new_image[r][c].rgbtRed;
-            image[r][c].rgbtGreen = (new_image[r][c].rgbtGreen > 255) ? 255 : new_image[r][c].rgbtGreen;
-            image[r][c].rgbtBlue = (new_image[r][c].rgbtBlue > 255) ? 255 : new_image[r][c].rgbtBlue;
+            image[r][c].rgbtRed = (uint8_t) new_image[r][c].red;
+            image[r][c].rgbtGreen = (uint8_t) new_image[r][c].green;
+            image[r][c].rgbtBlue =  (uint8_t) new_image[r][c].blue;
         }
     }
     free(new_image);
