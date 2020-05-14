@@ -24,4 +24,10 @@ int main(void)
     printf("%s\n", t);
 
     free(t);
+    
+    int x = 0;
+    
+    x--;
+    
+    printf("%i\n", x);
 }

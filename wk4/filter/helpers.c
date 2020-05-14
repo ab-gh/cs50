@@ -24,7 +24,7 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int col = 0; col < width; col++)
         {
-            int grey_pixel = (image[row][col].rgbtRed + image[row][col].rgbtGreen + image[row][col].rgbtBlue) / 3;
+            int grey_pixel = (int) round(((float) image[row][col].rgbtRed + (float) image[row][col].rgbtGreen + (float) image[row][col].rgbtBlue) / (float) 3);
             // printf("%i\n", grey_pixel);
             image[row][col].rgbtRed = grey_pixel;
             image[row][col].rgbtGreen = grey_pixel;
@@ -53,7 +53,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
     RGBTRIPLE(*new_image)[width] = calloc(height, width * sizeof(RGBTRIPLE));
-    if (image == NULL)
+    if (new_image == NULL)
     {
         fprintf(stderr, "Not enough memory to store image.\n");
         return;
@@ -63,7 +63,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         for (int col = 0; col < width; col++)
         {
             int pixels_to_average = 9;
-            
+
             int red_total = 0;
             int green_total = 0;
             int blue_total = 0;
@@ -85,19 +85,84 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     }
                 }
             }
-            new_image[row][col].rgbtRed = red_total / pixels_to_average;
-            new_image[row][col].rgbtGreen = green_total / pixels_to_average;
-            new_image[row][col].rgbtBlue = blue_total / pixels_to_average;
+            new_image[row][col].rgbtRed = (int) round((float) red_total / (float) pixels_to_average);
+            new_image[row][col].rgbtGreen = (int) round((float) green_total / (float) pixels_to_average);
+            new_image[row][col].rgbtBlue = (int) round((float) blue_total / (float) pixels_to_average);
         }
     }
-    
-    image = *new_image;
+    for (int r = 0; r < height; r++)
+    {
+        for (int c = 0; c < width; c++)
+        {
+            image[r][c].rgbtRed = new_image[r][c].rgbtRed;
+            image[r][c].rgbtGreen = new_image[r][c].rgbtGreen;
+            image[r][c].rgbtBlue = new_image[r][c].rgbtBlue;
+        }
+    }
     return;
 }
 
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
+    // edge kernels
+    int gx[3][3] = {{-1, 0, 1}, 
+                    {-2, 0, 2}, 
+                    {-1, 0, 1}};
+    int gy[3][3] = {{-1, -1, -1}, 
+                    {0, 0, 0}, 
+                    {1, 2, 1}};
+    RGBTRIPLE(*new_image)[width] = calloc(height, width * sizeof(RGBTRIPLE));
+    if (new_image == NULL)
+    {
+        fprintf(stderr, "Not enough memory to store image.\n");
+        return;
+    }
+    for (int row = 0; row < height; row++)
+    {
+        for (int col = 0; col < width; col++)
+        {
+            int red_x_total = 0;
+            int green_x_total = 0;
+            int blue_x_total = 0;
+            int red_y_total = 0;
+            int green_y_total = 0;
+            int blue_y_total = 0;
+
+            for (int rows_delta = -1; rows_delta < 2; rows_delta++)
+            {
+                for (int cols_delta = -1; cols_delta < 2; cols_delta++)
+                {
+                    if ((row+rows_delta) < 0 || (row+rows_delta) > height || (col+cols_delta) < 0 || (col+cols_delta) > width)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        red_x_total += (image[row+rows_delta][col+cols_delta].rgbtRed * gx[rows_delta+1][cols_delta+1]);
+                        green_x_total += (image[row+rows_delta][col+cols_delta].rgbtGreen * gx[rows_delta+1][cols_delta+1]);
+                        blue_x_total += (image[row+rows_delta][col+cols_delta].rgbtBlue * gx[rows_delta+1][cols_delta+1]);
+
+                        red_y_total += (image[row+rows_delta][col+cols_delta].rgbtRed * gy[rows_delta+1][cols_delta+1]);
+                        green_y_total += (image[row+rows_delta][col+cols_delta].rgbtGreen * gy[rows_delta+1][cols_delta+1]);
+                        blue_y_total += (image[row+rows_delta][col+cols_delta].rgbtBlue * gy[rows_delta+1][cols_delta+1]);
+                    }
+                }
+            }
+            new_image[row][col].rgbtRed = ((pow(red_x_total, 2) + pow(red_y_total, 2)) <= 0) ? 0 : round(sqrt(pow(red_x_total, 2) + pow(red_y_total, 2)));
+            new_image[row][col].rgbtGreen = ((pow(green_x_total, 2) + pow(green_y_total, 2)) <= 0) ? 0 : round(sqrt(pow(green_x_total, 2) + pow(green_y_total, 2)));
+            new_image[row][col].rgbtBlue = ((pow(blue_x_total, 2) + pow(blue_y_total, 2)) <= 0) ? 0 : round(sqrt(pow(blue_x_total, 2) + pow(blue_y_total, 2)));
+        }
+    }
+    for (int r = 0; r < height; r++)
+    {
+        for (int c = 0; c < width; c++)
+        {
+            image[r][c].rgbtRed = (new_image[r][c].rgbtRed > 255) ? 255 : new_image[r][c].rgbtRed;
+            image[r][c].rgbtGreen = (new_image[r][c].rgbtGreen > 255) ? 255 : new_image[r][c].rgbtGreen;
+            image[r][c].rgbtBlue = (new_image[r][c].rgbtBlue > 255) ? 255 : new_image[r][c].rgbtBlue;
+        }
+    }
     return;
 }
 
