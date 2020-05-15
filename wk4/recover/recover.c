@@ -53,22 +53,18 @@ int main(int argc, char *argv[])
             }
             printf("jpeg %03i in block %i to %i\n", jpeg_count, block_looking, (block_looking+image_block_size));
             char file_name[8];
-            sprintf(file_name, "%03i.jpg", jpeg_count);
+            sprintf(file_name, "%03i.jpg", (jpeg_count - 1));
             FILE *outpt = fopen(file_name, "a");
-            for (int printing_char = 0; printing_char < (512*image_block_size); printing_char++)
+            for (int printing_block = 0; printing_block < image_block_size; printing_block++)
             {
-                for (int printing_block = 0; printing_block < image_block_size; printing_block++)
+                printf("printing from block %i\n", printing_block);
+                for (int printing_char_of_block = 0; printing_char_of_block < 512; printing_char_of_block++)
                 {
-                    for (int printing_char_of_block = 0; printing_char_of_block < 512; printing_char_of_block++)
-                    {
-                        fprintf(outpt, "%c", file_arr[printing_block][printing_char_of_block]);
-                    }
+                    fprintf(outpt, "%c", file_arr[printing_block][printing_char_of_block]);
                 }
             }
             fclose(outpt);
         }
-        
-
     }
     
 }
