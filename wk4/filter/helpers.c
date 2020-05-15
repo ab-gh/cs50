@@ -19,6 +19,9 @@ typedef struct
 
 pixels pixel;
 
+
+
+
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -125,8 +128,14 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
     // Initialise sobel kernels
-    int gx[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
-    int gy[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
+    int gx[3][3] = {
+                    {-1, 0, 1}, 
+                    {-2, 0, 2}, 
+                    {-1, 0, 1}};
+    int gy[3][3] = {
+                    {-1, -2, -1}, 
+                    {0, 0, 0}, 
+                    {1, 2, 1}};
     // Gives us an empty array with INT structs, not uint8_t
     pixels(*new_image)[width] = calloc(height, width * sizeof(pixels));
     if (new_image == NULL)

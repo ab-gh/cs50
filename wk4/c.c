@@ -7,27 +7,8 @@
 
 int main(void)
 {
-    char *s = get_string("s: ");
-
-    char *t = malloc(strlen(s) + 1); // leaky
-
-    //for (int i = 0, n = strlen(s); i < n; i++)
-    //{
-    //    t[i] = s[i];
-    //}
-
-    strcpy(t, s);
-
-    t[0] = toupper(t[0]);
-
-    printf("%s\n", s);
-    printf("%s\n", t);
-
-    free(t);
-    
-    int x = 0;
-    
-    x--;
-    
-    printf("%i\n", x);
+    string a = "000.jpg";
+    printf("%lu\n", sizeof(a));
 }
+
+

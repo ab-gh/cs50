@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Usage: filter [flag] infile outfile\n");
         return 3;
     }
-
+    
     // Remember filenames
     char *infile = argv[optind];
     char *outfile = argv[optind + 1];
