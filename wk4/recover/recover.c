@@ -32,17 +32,14 @@ int main(int argc, char *argv[])
     
     uint8_t file_arr[blocks_count][512];
     
-    // char *file_arr = malloc(file_size);
-    
+
     for (int block = 0; block < blocks_count; block++)
     {
         fread(&file_arr[block], 512, 1, inpt);
-        
     }
     
     for (int block_looking = 0; block_looking < blocks_count; block_looking++)
     {
-        //if (file_arr[block_looking][0] == 0xff && file_arr[block_looking][1] == 0xd8 && file_arr[block_looking][2] == 0xff)
         if (is_jpeg_header(file_arr, block_looking, blocks_count))
         {
             jpeg_count++;
@@ -52,16 +49,14 @@ int main(int argc, char *argv[])
             {
                 image_block_size++;
             }
-            printf("jpeg %03i in block %i to %i\n", jpeg_count, block_looking, (block_looking+image_block_size));
             char file_name[8];
             sprintf(file_name, "%03i.jpg", (jpeg_count - 1));
-            FILE *outpt = fopen(file_name, "a");
+            FILE *outpt = fopen(file_name, "w");
             for (int printing_block = 0; printing_block < image_block_size; printing_block++)
             {
-                printf("printing from block %i\n", printing_block);
                 for (int printing_char_of_block = 0; printing_char_of_block < 512; printing_char_of_block++)
                 {
-                    fprintf(outpt, "%c", file_arr[printing_block][printing_char_of_block]);
+                    fprintf(outpt, "%c", file_arr[block_looking + printing_block][printing_char_of_block]);
                 }
             }
             fclose(outpt);
@@ -72,7 +67,7 @@ int main(int argc, char *argv[])
 
 bool is_jpeg_header(unsigned char file_arr[][512], int block_looking, int blocks_count)
 {
-    if (block_looking > blocks_count)
+    if (block_looking >= blocks_count)
     {
         return true;
         // no more blocks!
