@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 bool is_jpeg_header(unsigned char file_arr[][512], int block_looking, int blocks_count);
 
@@ -29,14 +30,14 @@ int main(int argc, char *argv[])
     
     blocks_count = file_size / 512; 
     
-    unsigned char file_arr[blocks_count][512];
+    uint8_t file_arr[blocks_count][512];
+    
+    // char *file_arr = malloc(file_size);
     
     for (int block = 0; block < blocks_count; block++)
     {
-        for (int byt = 0; byt < 512; byt++)
-        {
-            fread(&file_arr[block][byt], 1, 1, inpt);
-        }
+        fread(&file_arr[block], 512, 1, inpt);
+        
     }
     
     for (int block_looking = 0; block_looking < blocks_count; block_looking++)
