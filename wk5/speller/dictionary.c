@@ -1,6 +1,9 @@
 // Implements a dictionary's functionality
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "dictionary.h"
 
@@ -35,7 +38,63 @@ unsigned int hash(const char *word)
 // Loads dictionary into memory, returning true if successful else false
 bool load(const char *dictionary)
 {
-    // TODO
+    // Clear the table
+    for (int i = 0; i < (sizeof(table) / sizeof(table[0])); i++)
+    {
+        table[i] = NULL;
+    }
+    // Init some cars
+    char c;   
+    char aword[45] = "";
+    char fscanf_rtn = 0;
+    // open dictionary file
+    FILE *file = fopen(dictionary, "r");
+    if (file == NULL)
+    {
+        printf("Failed to open\n");
+    }
+    else
+    {
+        printf("opened\n");
+    }
+    // read strings from file one at a time
+    // c will crawl accross the file, one char at a time
+    while (fscanf_rtn != EOF) {
+        fscanf_rtn = fscanf(file, "%s", aword);
+        if (fscanf_rtn != EOF)
+        {
+            printf("word %s at hash %i\n", aword, hash(aword));
+            node *new_node = calloc(sizeof(node), 1);
+            printf("malloc\n");
+            strcpy(new_node->word, aword);
+            printf("copied\n");
+            node *pointing = table[hash(aword)];
+            while (pointing != 0)
+            { 
+                printf("next card\n");
+                pointing = pointing->next;
+            }
+            new_node->next = pointing;
+            
+        }
+    }
+    printf("---\n");
+    for (int i = 0; i < 3; i++)
+    {
+        printf("%s\n", table[0]->word);
+    }
+    
+
+    // for words
+    // create a new node for each word
+    
+    // hash word to obtain hash bucket
+    
+    // insert node into hash table at bucket location
+    
+        // 
+        // strcpy(n->word, word);
+        // n->next = NULL;
     return false;
 }
 
