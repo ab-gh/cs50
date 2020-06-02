@@ -60,41 +60,20 @@ bool load(const char *dictionary)
     // read strings from file one at a time
     // c will crawl accross the file, one char at a time
     while (fscanf_rtn != EOF) {
+        // Scan in the next word with a return check
         fscanf_rtn = fscanf(file, "%s", aword);
         if (fscanf_rtn != EOF)
         {
-            printf("word %s at hash %i\n", aword, hash(aword));
+            // Make a new empty node for this word
             node *new_node = calloc(sizeof(node), 1);
-            printf("malloc\n");
+            // Copy the new word into the new node
             strcpy(new_node->word, aword);
-            printf("copied\n");
-            node *pointing = table[hash(aword)];
-            while (pointing != 0)
-            { 
-                printf("next card\n");
-                pointing = pointing->next;
-            }
-            new_node->next = pointing;
-            
+            // Point this new node to the current first node in the bucket
+            new_node->next = table[hash(aword)];
+            // Push this node into the front of the bucket
+            table[hash(aword)] = new_node;
         }
     }
-    printf("---\n");
-    for (int i = 0; i < 3; i++)
-    {
-        printf("%s\n", table[0]->word);
-    }
-    
-
-    // for words
-    // create a new node for each word
-    
-    // hash word to obtain hash bucket
-    
-    // insert node into hash table at bucket location
-    
-        // 
-        // strcpy(n->word, word);
-        // n->next = NULL;
     return false;
 }
 
