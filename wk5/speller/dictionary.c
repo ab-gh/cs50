@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <strings.h>
 
 #include "dictionary.h"
 
@@ -17,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 26;
+const unsigned int N = 676;
 
 // Hash table
 node *table[N];
@@ -25,18 +26,42 @@ node *table[N];
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
-    // TODO
-    return false;
+    unsigned int checking_word_hash = hash(word);
+    // Get the head
+    node *cursor = table[checking_word_hash];
+    // If the head is empty
+    if (cursor == NULL)
+    {
+        // Empty bucket
+        return false;
+    }
+    while (true) {
+        // If the cursor word is our word
+        if (strcasecmp(word, cursor->word) == 0)
+        {
+            // Found
+            return true;
+        }
+        // If there is no next node
+        if (cursor->next == NULL)
+        {
+            // word not found
+            return false;
+        }        
+        // Move the cursor
+        cursor = cursor->next;
+    } 
 }
 
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    unsigned int first_char = 0;
-    printf("word: %s\n", word);
-    printf("char: %c hash: %i\n", tolower(word[0]), tolower(word[0]) - 97);
-    unsigned int hash_val = tolower(word[0]) - 97;
-    return 0;
+    // Get index of first letter
+    unsigned int first_letter = tolower(word[0]) - 97;
+    // Get index of second letter. If there isnt one, pretend its A
+    unsigned int second_letter = (word[1] == '\0') ? 0 : tolower(word[1] - 97);
+    unsigned int hash_val = (first_letter * 26) + second_letter;
+    return hash_val;
 }
 
 // Loads dictionary into memory, returning true if successful else false
@@ -48,8 +73,7 @@ bool load(const char *dictionary)
         table[i] = NULL;
     }
     // Init some cars
-    char c;
-    char aword[45] = "";
+    char current_dict_word[45] = "";
     char fscanf_rtn = 0;
     // open dictionary file
     FILE *file = fopen(dictionary, "r");
@@ -62,17 +86,18 @@ bool load(const char *dictionary)
     // c will crawl accross the file, one char at a time
     while (fscanf_rtn != EOF) {
         // Scan in the next word with a return check
-        fscanf_rtn = fscanf(file, "%s", aword);
+        fscanf_rtn = fscanf(file, "%s", current_dict_word);
         if (fscanf_rtn != EOF)
         {
+            int word_hash = hash(current_dict_word);
             // Make a new empty node for this word
             node *new_node = calloc(sizeof(node), 1);
             // Copy the new word into the new node
-            strcpy(new_node->word, aword);
+            strcpy(new_node->word, current_dict_word);
             // Point this new node to the current first node in the bucket
-            new_node->next = table[hash(aword)];
+            new_node->next = table[word_hash];
             // Push this node into the front of the bucket
-            table[hash(aword)] = new_node;
+            table[word_hash] = new_node;
         }
     }
     return true;
@@ -85,22 +110,47 @@ unsigned int size(void)
     for (int i = 0; i < N; i++)
     {
         node *seeking_pointer = table[i];
-        int cards_seen_in_bucket = 1;
-        while (seeking_pointer->next != 0)
+        if (seeking_pointer == 0)
         {
-            cards_seen_in_bucket++;
-            seeking_pointer = seeking_pointer->next;
+            // printf("fuck empty bucket %i\n", i);
+            continue;
         }
-        printf("%i words seen in bucket %i\n", cards_seen_in_bucket, i);
-        total_cards_seen = total_cards_seen + cards_seen_in_bucket;
+        else
+        {
+            int cards_seen_in_bucket = 1;
+            while (seeking_pointer->next != 0)
+            {
+                cards_seen_in_bucket++;
+                seeking_pointer = seeking_pointer->next;
+            }
+            // printf("%i words seen in bucket %i\n", cards_seen_in_bucket, i);
+            total_cards_seen = total_cards_seen + cards_seen_in_bucket;
+        }
     }
-    printf("total words: %i\n", total_cards_seen);
     return total_cards_seen;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    // for each bucket
+    for (int i = 0; i < N; i++)
+    {
+        node *cursor = table[i];
+        node *tmp = table[i];
+        if (cursor == NULL)
+        {
+            // empty bucket
+            free(table[i]);
+            continue;
+        }
+        while (cursor->next != NULL)
+        {
+            cursor = cursor->next;
+            free(tmp);
+            tmp = cursor;
+        }
+        free(cursor);
+    }
+    return true;
 }
