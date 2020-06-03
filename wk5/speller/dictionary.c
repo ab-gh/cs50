@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "dictionary.h"
 
@@ -16,7 +17,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 1;
+const unsigned int N = 26;
 
 // Hash table
 node *table[N];
@@ -31,7 +32,10 @@ bool check(const char *word)
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // TODO
+    unsigned int first_char = 0;
+    printf("word: %s\n", word);
+    printf("char: %c hash: %i\n", tolower(word[0]), tolower(word[0]) - 97);
+    unsigned int hash_val = tolower(word[0]) - 97;
     return 0;
 }
 
@@ -44,7 +48,7 @@ bool load(const char *dictionary)
         table[i] = NULL;
     }
     // Init some cars
-    char c;   
+    char c;
     char aword[45] = "";
     char fscanf_rtn = 0;
     // open dictionary file
@@ -52,10 +56,7 @@ bool load(const char *dictionary)
     if (file == NULL)
     {
         printf("Failed to open\n");
-    }
-    else
-    {
-        printf("opened\n");
+        return false;
     }
     // read strings from file one at a time
     // c will crawl accross the file, one char at a time
@@ -74,14 +75,27 @@ bool load(const char *dictionary)
             table[hash(aword)] = new_node;
         }
     }
-    return false;
+    return true;
 }
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    unsigned int total_cards_seen = 0;
+    for (int i = 0; i < N; i++)
+    {
+        node *seeking_pointer = table[i];
+        int cards_seen_in_bucket = 1;
+        while (seeking_pointer->next != 0)
+        {
+            cards_seen_in_bucket++;
+            seeking_pointer = seeking_pointer->next;
+        }
+        printf("%i words seen in bucket %i\n", cards_seen_in_bucket, i);
+        total_cards_seen = total_cards_seen + cards_seen_in_bucket;
+    }
+    printf("total words: %i\n", total_cards_seen);
+    return total_cards_seen;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
