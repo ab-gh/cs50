@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 676;
+const unsigned int N = 26;
 
 // Hash table
 node *table[N];
@@ -27,15 +27,16 @@ node *table[N];
 bool check(const char *word)
 {
     unsigned int checking_word_hash = hash(word);
-    // Get the head
+    // Point a cursor at the bucket head
     node *cursor = table[checking_word_hash];
-    // If the head is empty
+    // If the bucket is empty
     if (cursor == NULL)
     {
         // Empty bucket
         return false;
     }
-    while (true) {
+    while (true) 
+    {
         // If the cursor word is our word
         if (strcasecmp(word, cursor->word) == 0)
         {
@@ -56,12 +57,8 @@ bool check(const char *word)
 // Hashes word to a number
 unsigned int hash(const char *word)
 {
-    // Get index of first letter
-    unsigned int first_letter = tolower(word[0]) - 97;
-    // Get index of second letter. If there isnt one, pretend its A
-    unsigned int second_letter = (word[1] == '\0') ? 0 : tolower(word[1] - 97);
-    unsigned int hash_val = (first_letter * 26) + second_letter;
-    return hash_val;
+    // Hash function is just the alphabetical index of the first charachter
+    return (unsigned int) tolower(word[0]) - 97;
 }
 
 // Loads dictionary into memory, returning true if successful else false
@@ -72,21 +69,22 @@ bool load(const char *dictionary)
     {
         table[i] = NULL;
     }
-    // Init some cars
+    // Init some chars
     char current_dict_word[45] = "";
     char fscanf_rtn = 0;
     // open dictionary file
     FILE *file = fopen(dictionary, "r");
     if (file == NULL)
     {
-        printf("Failed to open\n");
         return false;
     }
     // read strings from file one at a time
     // c will crawl accross the file, one char at a time
-    while (fscanf_rtn != EOF) {
+    while (fscanf_rtn != EOF) 
+    {
         // Scan in the next word with a return check
         fscanf_rtn = fscanf(file, "%s", current_dict_word);
+        // If its not the end of the file
         if (fscanf_rtn != EOF)
         {
             int word_hash = hash(current_dict_word);
@@ -100,6 +98,8 @@ bool load(const char *dictionary)
             table[word_hash] = new_node;
         }
     }
+    // Close the file (free memory)
+    fclose(file);
     return true;
 }
 
@@ -109,21 +109,26 @@ unsigned int size(void)
     unsigned int total_cards_seen = 0;
     for (int i = 0; i < N; i++)
     {
-        node *seeking_pointer = table[i];
-        if (seeking_pointer == 0)
+        // Point a cursor at the start of the bucket
+        node *cursor = table[i];
+        // If the bucket is empty
+        if (cursor == 0)
         {
-            // printf("fuck empty bucket %i\n", i);
+            // Nothing to count
             continue;
         }
         else
         {
+            // Start with one in the bucket
             int cards_seen_in_bucket = 1;
-            while (seeking_pointer->next != 0)
+            // While there is a next node
+            while (cursor->next != 0)
             {
+                // Count it and move to the next
                 cards_seen_in_bucket++;
-                seeking_pointer = seeking_pointer->next;
+                cursor = cursor->next;
             }
-            // printf("%i words seen in bucket %i\n", cards_seen_in_bucket, i);
+            // Total
             total_cards_seen = total_cards_seen + cards_seen_in_bucket;
         }
     }
@@ -136,8 +141,10 @@ bool unload(void)
     // for each bucket
     for (int i = 0; i < N; i++)
     {
+        // Point a cursor and a temp at the start of each bucket
         node *cursor = table[i];
         node *tmp = table[i];
+        // If no cursor
         if (cursor == NULL)
         {
             // empty bucket
@@ -146,10 +153,14 @@ bool unload(void)
         }
         while (cursor->next != NULL)
         {
+            // Advance the cursor
             cursor = cursor->next;
+            // Empty the current temp pointer
             free(tmp);
+            // Advance the temp
             tmp = cursor;
         }
+        // Finally frees the cursor
         free(cursor);
     }
     return true;
