@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 26;
+const unsigned int N = 676;
 
 // Hash table
 node *table[N];
@@ -58,7 +58,30 @@ bool check(const char *word)
 unsigned int hash(const char *word)
 {
     // Hash function is just the alphabetical index of the first charachter
-    return (unsigned int) tolower(word[0]) - 97;
+    // Get index of first letter
+    char first_char = tolower(word[0]);
+    unsigned int first_int = ((int) first_char) - 97;
+    unsigned int second_int = 0;
+    // Find next char that is alpha
+    for (int i = 1; i < strlen(word); i++)
+    {
+        if (word[1] == '\0')
+        {
+            second_int = 0;
+            break;
+        }
+        else if (isalpha(word[i]))
+        {
+            second_int = ((int) tolower(word[i])) - 97;
+            break;
+        }
+    }
+    // Get index of second letter. If there isnt one, pretend its A
+    unsigned int hash_val = (first_int * 26) + second_int;
+    return hash_val;
+    
+    
+    //return (unsigned int) tolower(word[0]) - 97;
 }
 
 // Loads dictionary into memory, returning true if successful else false
