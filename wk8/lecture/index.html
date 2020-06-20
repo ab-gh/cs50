@@ -5,17 +5,14 @@
         <title>
             hello
         </title>
-        <!-- <link rel="stylesheet" href="styles.css"> -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="styles.css">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
+        <script src="script.js"></script>
     </head>
     <body>
         <h1>
             Here is a cat.
         </h1>
-        <div class="alert alert-warning">
-            This cat is very important
-        </div>
         <img src="cat.jpg" alt="handwritten lowercase word cat">
         <h1>
             Here is another cat.
@@ -57,5 +54,85 @@
             <input name="q" type="text">
             <input type="submit" value="Google Search">
         </form>
+        <br>
+        <h1>
+            Here is some JS which interacts with HTML.
+        </h1>
+        <div>
+            <p id="result">
+                Hello!
+            </p>
+        </div>
+        <form onsubmit="greet(); return false;">
+            <input type="text" id="name_input">
+            <input type="submit" value="Say Hello!">
+        </form>
+        </br>
+        <div>
+            <p id="counter_result">
+                0
+            </p>
+        </div>
+        <form onsubmit="decrement(); return false;">
+            <input type="submit" value="-">
+        </form>
+        <form onsubmit="increment(); return false;">
+            <input type="submit" value="+">
+        </form>
+        <h1>
+            Here is some JS which interacts with HTML and CSS.
+        </h1>
+        <div>
+            <p id="font_change_area">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mollis ex in tortor feugiat sollicitudin. Donec porta ultricies libero ut posuere. Nullam a lectus id ipsum placerat volutpat sed sit amet ligula. Ut non fermentum arcu, ac vestibulum quam. Vivamus egestas neque ligula, non tristique purus porttitor sit amet. Proin vestibulum mauris mi, sit amet convallis tellus sagittis vitae. Phasellus pellentesque dapibus eros, ac egestas ligula finibus eget. Fusce suscipit, ex quis facilisis luctus, nisi nisi elementum arcu, sit amet sollicitudin mi quam eget tortor.
+            </p>
+        </div>
+        <div>
+            <select>
+                <option value="large">Large Text</option>
+                <option value="initial" selected>Medium Text</option>
+                <option value="small">Small Text</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <button id="css_red">R</button>
+            <button id="css_green">G</button>
+            <button id="css_blue">B</button>
+            <button id="css_initial">Initial</button>
+        </div>
+        <script>
+            document.querySelector("select").onchange = function() {
+                document.querySelector("#font_change_area").style.fontSize = this.value;
+            }
+            document.querySelector("#css_red").onclick = function() {
+                document.querySelector("#font_change_area").style.color="red";
+            }
+            document.querySelector("#css_green").onclick = function() {
+                document.querySelector("#font_change_area").style.color="green";
+            }
+            document.querySelector("#css_blue").onclick = function() {
+                document.querySelector("#font_change_area").style.color="blue";
+            }
+            document.querySelector("#css_initial").onclick = function() {
+                document.querySelector("#font_change_area").style.color="LightSlateGrey";
+            }
+        </script>
+        <h1>
+            Here is some JS which autoupdates.
+        </h1>
+        <div>
+            <p id="blinker">
+                Hello, world!
+            </p>
+        </div>
+        <h1>
+            Here are your coordinates.
+        </h1>
+        <div>
+            <p id="coords">
+                0, 0
+            </p>
+        </div>
     </body>
 </html>
