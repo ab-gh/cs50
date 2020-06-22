@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>CS50 Homepage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" crossorigin="anonymous"></script>
+<script src="main.js"></script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <a class="navbar-brand" href="index.html">CS50:Homepage:aejb</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="coding.html">Coding</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="photography.html">Photography</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="music.html">Music & Drama</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header header container-fluid">
+    <div class="container pt-5 pb-5">
+        <div class="row align-items-center">
+            <h1>Coding</h1>
+            <p>
+                I was interested in computers from a very young age, and I've been coding in at least some capacity since I started secondary school in 2012.
+                Now, 8 years later, I am the Events officer for my university's <a href="https://cmpsc.uk" data-toggle="tooltip" data-placement="top" title="Visit cmpsc.uk" class="text-reset font-italic">Computing Society,</a>
+                and currently taking the <a href="https://cs50.harvard.edu/x/2020/" data-toggle="tooltip" data-placement="top" title="Visit CS50" class="text-reset font-italic">Harvard 2020 CS50x course</a>.
+            </p>
+        </div>
+        <div class="row align-items-center">
+            <h2>My skills</h2>
+        </div>
+        <div class="row align-items-center">
+            <p>
+                <div class="list-group pt-3 pb-3 selector-box">
+                    <button id="confident" class="list-group-item d-table-row list-group-item-success">
+                        <u>Confident</u>
+                        <svg class="bi bi-arrow-right confident-arrow" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
+                        </svg>
+                    </button>
+                    <button id="learning" class="list-group-item d-table-row list-group-item-warning">
+                        <u>Learning</u>
+                        <svg class="bi bi-arrow-right learning-arrow" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
+                        </svg>
+                    </button>
+                    <button id="planned" class="list-group-item d-table-row list-group-item-secondary">
+                        <u>Planned</u>
+                        <svg class="bi bi-arrow-right planned-arrow" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z"/>
+                            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z"/>
+                        </svg>
+                    </button>
+                </div>
+            </p>
+
+            <ul class="list-group pl-2 confident">
+                <li id="skills-content" class="list-group-item list-group-item-success">
+                        - Python + Jupyter</br>
+                        - C </br>
+                        - SQL </br>
+                        - Git </br>
+                        - Linux + Nginx
+                </li>
+
+            </ul>
+            <ul class="list-group pl-2 learning">
+                <li id="skills-content" class="list-group-item list-group-item-warning">
+                        - JS</br>- Mathematica </br>- HTML/CSS</br> - Bootstrap</br>- AWS
+                </li>
+            </ul>
+            <ul class="list-group pl-2 planned">
+                <li id="skills-content" class="list-group-item list-group-item-secondary">
+                        - C++</br>- Go </br>- Rust</br> - K8S </br> - Docker
+                </li>
+            </ul>
+        </div>
+        <script>
+        </script>
+        <div class="row align-items-center">
+            <h2>My work</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm pt-3 pb-3">
+                <div class="card text-white bg-dark" style="width: 18rem;">
+                    <img src="cs50x.jpg" class="card-img-top" alt="CS50 banner">
+                    <div class="card-body">
+                        <h5 class="card-title">CS50</h5>
+                        <p class="card-text">All of my project files for my CS50 work are public.
+                        <div class="alert alert-danger" role="alert">
+                             If you are currently on the CS50 course, please bear in mind the academic integrity agreement, and do not copy my code directly
+                        </div></p>
+                        <a href="https://github.com/aejb/cs50" class="btn btn-primary">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm pt-3 pb-3">
+                    <div class="card text-white bg-dark" style="width: 18rem;">
+                    <img src="gcse.png" class="card-img-top" alt="CS50 banner">
+                    <div class="card-body">
+                        <h5 class="card-title">GCSE Coursework</h5>
+                        <p class="card-text">Despite being 3 year old code, this is the work I did for my GCSE Computing coursework. It's janky and spaghetti code, but I like to see it as an example of how I've improved since then.</p>
+                        <a href="https://github.com/aejb/GSCE-Coursework-Python-GTIN" class="btn btn-primary">Python Task</a>
+                        <a href="https://github.com/aejb/GSCE-Coursework-Weblang-TrafficLights" class="btn btn-primary">Web Task</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm pt-3 pb-3">
+                    <div class="card text-white bg-dark" style="width: 18rem;">
+                    <img src="rythm.png" class="card-img-top" alt="CS50 banner">
+                    <div class="card-body">
+                        <h5 class="card-title">Rythm Info</h5>
+                        <p class="card-text">I built this Discord bot (and its much older CLI interface) while I was part of the moderation team for <a href="https://rythmbot.co/" data-toggle="tooltip" data-placement="top" title="Visit rythmbot.co" class="text-reset font-italic">Rythm</a>
+                        , one of Discord's largest bots. Because of its size, the team needed instant live updates on the status of the ~4000 shards we ran the bot on.</p>
+                        <a href="https://github.com/aejb/ri" class="btn btn-primary">Rythm Info</a>
+                        <a href="https://github.com/aejb/ry" class="btn btn-secondary red-tooltip" data-toggle="tooltip" data-placement="top" title="Deprecated">CLI</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+    </div>
+
+</header>
+
+
+</body>
+</html>

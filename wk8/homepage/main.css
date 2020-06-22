@@ -1,6 +1,64 @@
-.header {
-  background-image: linear-gradient(180deg, #8652fc, #88bdff);
-  background-size: cover;
-  background-position: center;
-  position: relative;
+body {
+    background-image: -webkit-linear-gradient(#8652fc, #88bdff);
+    background-image: -moz-linear-gradient(#8652fc, #88bdff);
+    background-image: -o-linear-gradient(#8652fc, #88bdff);
+    background-image: linear-gradient(#8652fc, #88bdff);
+    background-size: auto;
+    background-position: center;
+    position: relative;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.headshot {
+    width: 10%;
+}
+
+.red-tooltip > .tooltip-inner {background-color: red !important; color: red !important;
+}
+
+.confident {
+    display: inline;
+    width: 13em;
+}
+.confident-arrow {
+    display: inline;
+}
+.learning {
+    display: none;
+    width: 13em;
+}
+.learning-arrow {
+    display: none;
+}
+.planned {
+    display: none;
+    width: 13em;
+}
+.planned-arrow {
+    display: none;
+}
+.selector-box {
+    width: 9em;
+}
+.twitter {
+    padding: 1em;
+    width: 7em;
+    fill: #1DA1F2;
+}
+.github {
+    padding: 1em;
+    width: 7em;
+    fill: #000;
+}
+.discord {
+    padding: 1em;
+    width: 7em;
+    fill: #7289DA;
+}
+.social-card {
+    width: 25em;
+}
+.btn {
+    -webkit-appearance: none
 }

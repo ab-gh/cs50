@@ -1,0 +1,11 @@
+                        - Python + Jupyter</br>
+                        - C </br>
+                        - SQL </br>
+                        - Nginx + Linux server maintainance
+                        
+                        
+                        
+                        - JS</br>- Mathematica </br>- HTML/CSS/Bootstrap</br>- AWS
+                        
+                        - C++</br>- Go </br>- Rust</br>
+                        

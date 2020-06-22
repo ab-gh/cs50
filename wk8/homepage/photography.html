@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>CS50 Homepage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/umd/popper.min.js" integrity="sha256-XahKYIZhnEztrOcCTmaEErjYDLoLqBoDJbVMYybyjH8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha256-OFRAJNoaD8L3Br5lglV7VyLRf0itmoBzWUoM+Sji4/8=" crossorigin="anonymous"></script>
+<script src="main.js"></script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <a class="navbar-brand" href="index.html">CS50:Homepage:aejb</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="coding.html">Coding</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="photography.html">Photography</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="music.html">Music & Drama</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header header container-fluid">
+    <div class="container pt-5 pb-5">
+        <div class="row align-items-center">
+            <h1>Photography</h1>
+        </div>
+        <div class="row align-items-center pt-3">
+            <p>
+                I consider myself an amateur/hobbyist photographer. Below is what equiptment I use, and a slideshow of some of my photos.
+            </p>
+        </div>
+        <div class="row align-items-center">
+            <h2>Equipment</h2>
+        </div>
+        <div class="row align-items-center">
+            <ul class="list-group pt-3">
+                <li class="list-group-item list-group-item-dark">
+                    <b>Camera Body</b></br>
+                    - Sony A6000 (silver)
+                </li>
+                <li class="list-group-item pb-3 list-group-item-dark">
+                    <b>Lenses</b></br>
+                    - SEL1855: 18-55mm f3.5-5.6 E-Mount, OSS (silver)</br>
+                    - SEL55210: 55-210mm f4.5-6.3 E-Mount, OSS (black)
+                </li>
+            </ul>
+        </div>
+        <div class="row align-items-center pt-5">
+            <div class="alert alert-warning alert-dismissible fade show col-lg-12" role="alert">
+                <span class="align-middle pr-3">If any of the images below fail to load, please reload the page</span>
+                <button id="reload" type="button" class="btn btn-outline-secondary">Reload <svg class="bi bi-arrow-clockwise align-text-bottom" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"/>
+                    <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="row align-items-center pt-3">
+            <h2>Portfolio</h2>
+        </div>
+        <div id="carouselExampleIndicators" class="carousel slide pt-3" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+            </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="lumiere-12.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="usa1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="usa2.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="usa3.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="usa4.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="usa5.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="usa6.jpg" class="d-block w-100" alt="...">
+            </div>
+          </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        </div>
+    </div>
+</header>
+</body>
+</html>
