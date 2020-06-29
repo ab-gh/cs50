@@ -5,6 +5,19 @@
 {% endblock %}
 
 {% block main %}
+    <h1 class="pb-3">Login</h1>
+    {% if show_error %}
+    <div class="row justify-content-center">
+        <div class="col-4 pb-3">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ show_error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <form action="/login" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
@@ -12,6 +25,9 @@
         <div class="form-group">
             <input class="form-control" name="password" placeholder="Password" type="password">
         </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
+        <button class="btn btn-primary" type="submit">Log In</button></br>
+        <div class="row justify-content-center pt-3">
+        <a class="btn btn-secondary" href="/register">Create an account</a>
+        </div>
     </form>
 {% endblock %}

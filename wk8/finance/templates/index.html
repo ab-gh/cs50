@@ -28,11 +28,15 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ stock["name"] }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ stock["symbol"] }}</h6>
-                        <p class="card-text"><h1 class="stock-price">{{ stock["shares"] }}</h1><h3 class="per-stock"> stock{% print("s" if stock["shares"] > 1 else "") %}</h3></p>
+                        <p class="card-text"><h1 class="stock-price">{{ stock["shares"] }}</h1><h3 class="per-stock"> share{% print("s" if stock["shares"] > 1 else "") %}</h3></p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item text-white bg-secondary"><div style="text-align:left;">Current price<span style="float:right;">${{ stock["price"] }}</span></div></li>
                     </ul>
+                    <div class="card-body">
+                        <div style="text-align:left;"><a href="/buy#symbol={{ stock['symbol'] }}" class="btn btn-danger">Buy</a>
+                        <span style="float:right;"><a href="/sell#symbol={{ stock['symbol'] }}" class="btn btn-success">Sell</a></span></div>
+                    </div>
                 </div>
             </div>
             {% endif %}
