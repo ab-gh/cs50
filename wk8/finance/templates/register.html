@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <h1>Register for an account</h1>
+    <form action="/register" method="post">
+    <div class="row justify-content-center">
+        <div class="col-4 pt-3">
+            <h4 class="text-left">Username</h4>
+            <div class="input-group mb-3">
+                <input name="username" id="username" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div id="username-alert" class="alert alert-danger" role="alert">
+                Please enter a username
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4 pt-3">
+            <h4 class="text-left">Password</h4>
+            <div class="input-group mb-3">
+                 <input name="password" id="password" type="text" class="form-control" aria-label="Password" aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4 pt-3">
+            <h4 class="text-left">Confirm Password</h4>
+            <div class="input-group mb-3">
+                 <input name="confirmation" id="password-confirm" type="text" class="form-control" aria-label="Password" aria-describedby="basic-addon1">
+            </div>
+            <div id="password-alert" class="alert alert-danger" role="alert">
+                Passwords must match
+            </div>
+        </div>
+    </div>
+    <input disabled class="btn btn-primary" id="signup" type="submit" tabindex="-1" value="Sign Up">
+    </form>
+<script>
+    function check_signup()
+    {
+        let username_ok = false;
+        let password_ok = false;
+        if (document.querySelector("#username").value === "") {
+            username_ok = false;
+            document.querySelector("#username-alert").style.display = "block";
+        } else {
+            username_ok = true;
+            document.querySelector("#username-alert").style.display = "none";
+        }
+        if ( document.querySelector("#password-confirm").value === "") {
+            password_ok = false;
+            document.querySelector("#password-alert").style.display = "block";
+        } else if (document.querySelector("#password").value == document.querySelector("#password-confirm").value)  {
+            password_ok = true;
+            document.querySelector("#password-alert").style.display = "none";
+        } else {
+            password_ok = false;
+            document.querySelector("#password-alert").style.display = "block";
+        }
+        if (username_ok && password_ok) {
+            document.querySelector("#signup").disabled = false;
+        } else if (!username_ok && !password_ok) {
+            document.querySelector("#signup").disabled = true;
+        }
+    };
+    window.setInterval(check_signup, 50);
+
+</script>
+{% endblock %}

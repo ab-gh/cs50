@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <h1>Sell your stock</h1>
+    {% if show_error %}
+    <div class="row justify-content-center">
+        <div class="col-4 pt-3">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ show_error }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <form action="/sell" method="post">
+    <div class="row justify-content-center">
+        <div class="col-4 pt-3">
+            <div class="input-group mb-3">
+                <input name="symbol" id="symbol" type="text" class="form-control" placeholder="Trade symbol" aria-label="Symbol" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <input name="amount" id="amount" type="text" class="form-control" placeholder="Number of shares" aria-label="Amount" aria-describedby="basic-addon1">
+            </div>
+            <input disabled class="btn btn-primary" id="submit" type="submit" tabindex="-1" value="Sell">
+        </div>
+    </div>
+    </form>
+    {% if render_card %}
+    <div class="row justify-content-center">
+        <div class="col-4 pt-3 justify-content-center">
+            <div class="card justify-content-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Sale complete</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ stock_name }} ({{ stock_symbol }})</h6>
+                    <p class="card-text"><h2 class="stock-price">{{ amount }} </h2><h3 class="per-stock"> @ ${{ stock_price }}</h3></p>
+                </div>
+                <ul class="list-group list-group-flush pb-1">
+                    <li class="list-group-item"><div style="text-align:left;">Symbol<span style="float:right;">{{ stock_symbol }}</span></div></li>
+                    <li class="list-group-item"><div style="text-align:left;">Shares<span style="float:right;">{{ amount }}</span></div></li>
+                    <li class="list-group-item"><div style="text-align:left;">Price<span style="float:right;">{{ "${:,.2f}".format((stock_price)|round(2, 'common')) }}</span></div></li>
+                    <li class="list-group-item"><div style="text-align:left;">TOTAL<span style="float:right;">{{ "${:,.2f}".format((purchase_total)|round(2, 'common')) }}</span></div></li>
+                </ul>
+                <div class="card-header text-white bg-primary"><div style="text-align:left;">Account<span style="float:right;">{{ "${:,.2f}".format((account_total)|round(2, 'common')) }}</span></div></div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <script>
+        document.querySelector("#symbol").onkeyup = function() {
+            if (document.querySelector("#symbol").value === "" || document.querySelector("#amount").value === "") {
+                document.querySelector("#submit").disabled = true;
+            } else {
+                document.querySelector("#submit").disabled = false;
+            }
+        };
+        document.querySelector("#amount").onkeyup = function() {
+            if (document.querySelector("#symbol").value === "" || document.querySelector("#amount").value === "") {
+                document.querySelector("#submit").disabled = true;
+            } else {
+                document.querySelector("#submit").disabled = false;
+            }
+        }
+    </script>
+{% endblock %}

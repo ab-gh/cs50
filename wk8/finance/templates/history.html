@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <h1 class="pb-3">History</h1>
+    <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Transaction</th>
+        <th scope="col">Symbol</th>
+        <th scope="col">Shares</th>
+        <th scope="col">Unit price</th>
+        <th scope="col">TOTAL</th>
+        <th scope="col">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in table %}
+        {% if row["transaction"] == "SELL" %}
+            <tr class="table-success">
+        {% else %}
+            <tr class="table-danger">
+        {% endif %}
+            <th scope="row">{{ row["transaction"] }}</th>
+            <td>{{ row["symbol"] }}</td>
+            <td>{{ row["amount"] }}</td>
+            <td>{{ "${:,.2f}".format((row["purchaseprice"])|round(2, 'common')) }}</td>
+            <td>{{ "-" if row["amount"]>0 else "" }}{{ "${:,.2f}".format((row["purchaseprice"]*(row["amount"]|abs))|round(2, 'common')) }}</td>
+            <td>{{ row["datetime"] }}</td>
+            </tr>
+
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

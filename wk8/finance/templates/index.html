@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <h1>Portfolio</h1>
+    <div class="row justify-content-center">
+        <div class="col-4 pt-3 justify-content-center">
+            <div class="card text-white bg-primary justify-content-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Total liquidated portfolio</h5>
+                    <p class="card-text"><h1 class="stock-price">{{ "${:,.2f}".format((total_assets + cash)|round(2, 'common')) }}</h1></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-white bg-success"><div style="text-align:left;">Cash<span style="float:right;">{{ "${:,.2f}".format(cash|round(2, 'common')) }}</span></div></li>
+                    <li class="list-group-item text-white bg-danger"><div style="text-align:left;">Stocks<span style="float:right;">{{ "${:,.2f}".format(total_assets|round(2, 'common')) }}</span></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        {% for stock in stocks %}
+            {% if stock["shares"] > 0 %}
+            <div class="col-4 pt-3 justify-content-center">
+                <div class="card justify-content-center" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ stock["name"] }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ stock["symbol"] }}</h6>
+                        <p class="card-text"><h1 class="stock-price">{{ stock["shares"] }}</h1><h3 class="per-stock"> stock{% print("s" if stock["shares"] > 1 else "") %}</h3></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-white bg-secondary"><div style="text-align:left;">Current price<span style="float:right;">${{ stock["price"] }}</span></div></li>
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <script>
+        document.querySelector("#symbol").onkeyup = function() {
+            if (document.querySelector("#symbol").value === "") {
+                document.querySelector("#submit").disabled = true;
+            } else {
+                document.querySelector("#submit").disabled = false;
+            }
+        }
+    </script>
+{% endblock %}
