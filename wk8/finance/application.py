@@ -70,7 +70,7 @@ def buy():
         try:
             amount = int(amount)
         except:
-            return render_template("quote.html", render_card=False, show_error="Please enter an integer stock amount to purchase")
+            return render_template("buy.html", render_card=False, show_error="Please enter an integer stock amount to purchase")
         else:
             if amount < 1:
                 return render_template("buy.html", render_card=False, show_error="Please specify a positive integer")
@@ -192,26 +192,25 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
+    stock_list = db.execute("SELECT symbol, shares FROM stocks WHERE userid=(:userid)", userid=session["user_id"])
     if request.method == "GET":
-        stocks = db.execute("SELECT symbol, shares FROM stocks WHERE userid=(:userid)", userid=session["user_id"])
-        print(stocks)
-        return render_template("sell.html", stocks=stocks)
+        return render_template("sell.html", stocks=stock_list)
     elif request.method == "POST":
         stock = lookup(request.form.get("symbol"))
         amount = request.form.get("amount")
         if not stock:
-            return render_template("sell.html", render_card=False, show_error="No stock found with that symbol")
+            return render_template("sell.html", render_card=False, show_error="No stock found with that symbol", stocks=stock_list)
         try:
             amount = int(amount)
         except:
-            return render_template("sell.html", render_card=False, show_error="Please enter an integer stock amount to purchase")
+            return render_template("sell.html", render_card=False, show_error="Please enter an integer stock amount to purchase", stocks=stock_list)
         else:
             if amount < 1:
-                return render_template("sell.html", render_card=False, show_error="Please specify a positive integer")
+                return render_template("sell.html", render_card=False, show_error="Please specify a positive integer", stocks=stock_list)
             try:
                 stocks_available = db.execute("SELECT shares FROM stocks WHERE userid=(:userid) AND symbol=(:symbol)", userid=session["user_id"], symbol=stock["symbol"])[0]["shares"]
             except:
-                return render_template("sell.html", render_card=False, show_error="Insufficient " + stock["symbol"] + " stocks")
+                return render_template("sell.html", render_card=False, show_error="Insufficient " + stock["symbol"] + " stocks", stocks=stock_list)
             else:
                 if stocks_available >= amount:
                     new_stocks = stocks_available - amount
@@ -223,7 +222,7 @@ def sell():
                     db.execute("INSERT INTO history (userid, symbol, amount, purchaseprice, datetime) VALUES (:userid, :symbol, :amount, :purchaseprice, :time)", userid=session["user_id"], symbol=stock["symbol"], amount=(-1*amount), purchaseprice=stock["price"], time=time.strftime('%Y-%m-%d %H:%M:%S'))
                     return render_template("sell.html", render_card=True, purchase_total=sale_total, amount=amount, stock_name=stock["name"], stock_symbol=stock["symbol"], stock_price=stock["price"], account_total=new_cash)
                 else:
-                    return render_template("sell.html", render_card=False, show_error="Insufficient " + stock["symbol"] + " stocks")
+                    return render_template("sell.html", render_card=False, show_error="Insufficient " + stock["symbol"] + " stocks", stocks=stock_list)
 
 
 def errorhandler(e):
