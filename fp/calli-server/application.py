@@ -28,5 +28,6 @@ def today():
 def new_event():
     if request.method == "POST":
         content = request.json
+        print(content)
         db.execute("INSERT INTO '1' (type, name, date, start, end, location) VALUES (:etype, :name, :date, :start, :end, :location)", etype="E", name=content['name'], date=content['date'], start=content['start'], end=content['end'], location=content['location'])
         return "success"
