@@ -1,0 +1,45 @@
+#!/usr/local/bin/python3
+import click
+import datetime as dt
+import json
+import requests
+
+baseurl = "https://c448e6d2-b8c6-460c-9f06-b405cfa8cb01-ide.cs50.xyz:8080/api"
+
+@click.group()
+def main():
+    pass
+
+@main.command()
+@click.argument("event_name", nargs=-1)
+@click.option("--day", "-d", default=dt.date.today().strftime("%d/%m/%Y"), prompt="Date (D/M/<YYYY>)", help="Date of the event")
+@click.option("--start", "-t", default=dt.time(0).strftime("%-I:%M %p"), prompt="Start time (HH:MM AM/PM)", help="Start time of the event")
+@click.option("--duration", "-l", default='60', prompt="Event duration (minutes)", help="Duration of the event")
+def event(event_name, day, start, duration):
+    url = baseurl + "/new/event"
+    event_d = {}
+    event_d["name"] = " ".join(event_name)
+    event_d["day"] = day
+    event_d["start"] = start
+    try:
+        event_d["end"] = ((dt.datetime.combine(dt.date.today(), dt.datetime.strptime(start, "%I:%M %p").time())) + dt.timedelta(minutes=int(duration))).strftime("%H:%M")
+    except:
+        click.echo("Start time requires the HH:MM AM/PM format")
+    print(url, json.dumps(event_d))
+    requests.post(url, data=json.dumps(event_d))
+    click.echo(f"Created event {event_d['name']} on {event_d['day']} at {event_d['start']} to {event_d['end']}")
+
+@main.command()
+@click.argument("reminder_name", nargs=-1)
+@click.option("--day", "-d", default=dt.date.today().strftime("%-d/%-m/%Y"), prompt="Day", help="Date of the reminder")
+@click.option("--time", "-t", default=dt.time(0).strftime("%-I:%M%P"), prompt="Time", help="Time of the reminder")
+def remind(reminder_name, day, time):
+    remind_d = {}
+    remind_d["name"] = " ".join(reminder_name)
+    remind_d["day"] = day
+    remind_d["time"] = time
+    json.loads(json.dumps(remind_d))
+    click.echo(f"Reminder created {remind_d['name']} on {remind_d['day']} at {remind_d['time']}")
+
+if __name__ == "__main__":
+    main()
